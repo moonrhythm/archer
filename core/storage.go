@@ -2,6 +2,13 @@ package core
 
 import (
 	"context"
+
+	"github.com/pkg/errors"
+)
+
+// Errors
+var (
+	ErrNotFound = errors.New("not found")
 )
 
 // Storage type
