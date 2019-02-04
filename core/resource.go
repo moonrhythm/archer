@@ -1,4 +1,4 @@
-package api
+package core
 
 import (
 	"encoding/json"
@@ -17,13 +17,6 @@ type validator interface {
 	Valid() error
 }
 
-var resourceKinds = make(map[string]reflect.Type)
-
-// Register registers kind
-func Register(kind string, d interface{}) {
-	resourceKinds[kind] = reflect.TypeOf(d)
-}
-
 // UnmarshalJSON implements json.Unmarshaler
 func (r *Resource) UnmarshalJSON(b []byte) error {
 	var d struct {
@@ -38,8 +31,8 @@ func (r *Resource) UnmarshalJSON(b []byte) error {
 		Metadata Metadata    `json:"metadata"`
 		Spec     interface{} `json:"spec"`
 	}
-	if typ, ok := resourceKinds[d.Kind]; ok {
-		p.Spec = reflect.New(typ)
+	if reg, ok := registry[d.Kind]; ok {
+		p.Spec = reflect.New(reg.Spec)
 	} else {
 		return fmt.Errorf("unknown kind")
 	}

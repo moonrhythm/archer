@@ -3,17 +3,18 @@ package environment
 import (
 	"fmt"
 
-	"github.com/moonrhythm/archer/api"
+	"github.com/moonrhythm/archer/core"
 )
 
 // Environment spec
 type Environment struct {
-	Project string            `json:"project"`
-	Data    map[string]string `json:"data"`
+	Project     string            `json:"project"`
+	Description string            `json:"description"`
+	Data        map[string]string `json:"data"`
 }
 
 func init() {
-	api.Register("Environment", &Environment{})
+	core.Register("Environment", &ctrl{}, &Environment{})
 }
 
 // Valid checks is env spec valid

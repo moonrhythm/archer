@@ -1,4 +1,4 @@
-package api
+package core
 
 import (
 	"fmt"
@@ -7,14 +7,17 @@ import (
 
 // Metadata is the resource's metadata
 type Metadata struct {
-	Name        Name   `json:"name"`
-	Description string `json:"description"`
+	Name      Name `json:"name"`
+	Namespace Name `json:"namespace"`
 }
 
 // Valid checks is metadata valid
 func (m *Metadata) Valid() error {
 	if err := m.Name.Valid(); err != nil {
 		return fmt.Errorf("name; %s", err)
+	}
+	if err := m.Namespace.Valid(); err != nil {
+		return fmt.Errorf("namespace; %s", err)
 	}
 	return nil
 }

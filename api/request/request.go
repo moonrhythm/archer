@@ -3,7 +3,7 @@ package request
 import (
 	"fmt"
 
-	"github.com/moonrhythm/archer/api"
+	"github.com/moonrhythm/archer/core"
 )
 
 // Request type
@@ -12,14 +12,15 @@ type Request struct {
 	Project string `json:"project"`
 	Group   string `json:"group"`
 
-	Method  string   `json:"method"`
-	URL     string   `json:"url"`
-	Headers []Header `json:"headers"`
-	Body    string   `json:"body"`
+	Description string   `json:"description"`
+	Method      string   `json:"method"`
+	URL         string   `json:"url"`
+	Headers     []Header `json:"headers"`
+	Body        string   `json:"body"`
 }
 
 func init() {
-	api.Register("Request", &Request{})
+	core.Register("Request", &ctrl{}, &Request{})
 }
 
 // Valid checks is request spec valid

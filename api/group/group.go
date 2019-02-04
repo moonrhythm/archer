@@ -3,19 +3,20 @@ package group
 import (
 	"fmt"
 
-	"github.com/moonrhythm/archer/api"
+	"github.com/moonrhythm/archer/core"
 )
 
 // Group spec
-//
-// Group must contain one of project or group
 type Group struct {
+	// one of
 	Project string `json:"project"`
 	Group   string `json:"group"`
+
+	Description string `json:"description"`
 }
 
 func init() {
-	api.Register("Group", &Group{})
+	core.Register("Group", &ctrl{}, &Group{})
 }
 
 // Valid checks is group spec valid

@@ -1,12 +1,12 @@
 package list
 
 import (
-	"github.com/moonrhythm/archer/api"
+	"github.com/moonrhythm/archer/core"
 )
 
 // List spec
-type List []*api.Resource
+type List []*core.Resource
 
 func init() {
-	api.Register("List", &List{})
+	core.Register("List", &ctrl{}, &List{})
 }
