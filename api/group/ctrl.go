@@ -4,9 +4,14 @@ import (
 	"context"
 
 	"github.com/moonrhythm/archer/core"
+	"github.com/moonrhythm/archer/core/namespace"
 )
 
 type ctrl struct{}
+
+func (c ctrl) Key(ctx context.Context, name string) string {
+	return "namespaces/" + namespace.Get(ctx) + "/group/" + name
+}
 
 func (ctrl) Create(ctx context.Context, obj *core.Object) error {
 	panic("implement me")

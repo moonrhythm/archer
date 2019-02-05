@@ -2,6 +2,7 @@ package namespace
 
 import (
 	"context"
+	"net/http"
 	"strings"
 )
 
@@ -39,4 +40,14 @@ func Split(s string) (ns string, name string) {
 	default:
 		return "", ""
 	}
+}
+
+// Middleware strips prefix path as namespace
+func Middleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		index := strings.Index(r.URL.Path[1:], "/")
+		r = r.WithContext(NewContext(r.Context(), r.URL.Path[:index+1]))
+		r.URL.Path = r.URL.Path[index+1:]
+		h.ServeHTTP(w, r)
+	})
 }

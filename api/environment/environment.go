@@ -13,8 +13,15 @@ type Environment struct {
 	Data        map[string]string `json:"data"`
 }
 
+const Kind = "Environment"
+
 func init() {
-	core.Register("Environment", &ctrl{}, &Environment{})
+	core.Register(core.RegistryItem{
+		Kind:      Kind,
+		Ctrl:      &ctrl{},
+		Spec:      &Environment{},
+		Namespace: true,
+	})
 }
 
 // Valid checks is env spec valid

@@ -8,6 +8,10 @@ import (
 
 type ctrl struct{}
 
+func (c ctrl) Key(ctx context.Context, name string) string {
+	return ""
+}
+
 func (ctrl) Create(ctx context.Context, obj *core.Object) error {
 	spec := obj.Spec.(*List)
 

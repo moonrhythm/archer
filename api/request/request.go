@@ -19,8 +19,15 @@ type Request struct {
 	Body        string   `json:"body"`
 }
 
+const Kind = "Request"
+
 func init() {
-	core.Register("Request", &ctrl{}, &Request{})
+	core.Register(core.RegistryItem{
+		Kind:      Kind,
+		Ctrl:      &ctrl{},
+		Spec:      &Request{},
+		Namespace: true,
+	})
 }
 
 // Valid checks is request spec valid

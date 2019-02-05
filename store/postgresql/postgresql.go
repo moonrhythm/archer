@@ -12,15 +12,25 @@ import (
 var _ = pq.Driver{}
 
 // New creates new storage implements using postgres
-func New(db *sql.DB) core.Storage {
-	db.Exec(`
+func New(url string) (core.Storage, error) {
+	// TODO: add options to set idle conn, idle time, etc.
+	db, err := sql.Open("postgres", url)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = db.Exec(`
 		create table if not exists storage (
 			key varchar,
 			value varchar,
 			primary key (key)
 		)
 	`)
-	return &storage{db}
+	if err != nil {
+		return nil, err
+	}
+
+	return &storage{db}, nil
 }
 
 type storage struct {
@@ -33,7 +43,7 @@ func (s *storage) Set(ctx context.Context, key string, value []byte) error {
 			(key, value)
 		values
 			($1, $2)
-		on conflict do update set
+		on conflict (key) do update set
 			value = excluded.value
 	`, key, value)
 	return err

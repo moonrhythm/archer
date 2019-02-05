@@ -15,8 +15,17 @@ type Group struct {
 	Description string `json:"description"`
 }
 
+const (
+	Kind = "Group"
+)
+
 func init() {
-	core.Register("Group", &ctrl{}, &Group{})
+	core.Register(core.RegistryItem{
+		Kind:      Kind,
+		Ctrl:      &ctrl{},
+		Spec:      &Group{},
+		Namespace: true,
+	})
 }
 
 // Valid checks is group spec valid

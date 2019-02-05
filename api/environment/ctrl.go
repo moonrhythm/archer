@@ -11,6 +11,10 @@ import (
 
 type ctrl struct{}
 
+func (c ctrl) Key(ctx context.Context, name string) string {
+	return "namespaces/" + namespace.Get(ctx) + "/environment/" + name
+}
+
 func (ctrl) Create(ctx context.Context, obj *core.Object) error {
 	panic("implement me")
 }

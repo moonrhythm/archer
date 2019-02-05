@@ -32,7 +32,7 @@ func (r *Resource) UnmarshalJSON(b []byte) error {
 		Spec     interface{} `json:"spec"`
 	}
 	if reg, ok := registry[d.Kind]; ok {
-		p.Spec = reflect.New(reg.Spec)
+		p.Spec = reflect.New(reg.specType)
 	} else {
 		return fmt.Errorf("unknown kind")
 	}

@@ -8,7 +8,7 @@ import (
 // Metadata is the resource's metadata
 type Metadata struct {
 	Name      Name `json:"name"`
-	Namespace Name `json:"namespace"`
+	Namespace Name `json:"namespace,omitempty"`
 }
 
 // Valid checks is metadata valid
@@ -27,6 +27,7 @@ type Name string
 
 var reName = regexp.MustCompile(`^[a-z0-9\-.]+$`)
 
+// Valid checks is name valid
 func (n Name) Valid() error {
 	if n == "" {
 		return fmt.Errorf("required")
@@ -38,4 +39,9 @@ func (n Name) Valid() error {
 		return fmt.Errorf("invalid format")
 	}
 	return nil
+}
+
+// String returns n
+func (n Name) String() string {
+	return string(n)
 }
